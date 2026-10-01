@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Available Quizzes | QuizCraft AI{% endblock %}
+
+{% block content %}
+<!-- Welcome Banner -->
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2rem;">
+    <div>
+        <div style="margin-bottom: 0.5rem;">
+            <span class="badge badge-primary">
+                <i class="fa-solid fa-graduation-cap"></i> Student Dashboard
+            </span>
+        </div>
+        <h1>Welcome, <span style="background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">{{ user.username }}</span>! 👋</h1>
+        <p style="margin: 0; color: var(--text-muted);">Choose a quiz below to challenge yourself and track your performance.</p>
+    </div>
+
+    <div style="display: flex; gap: 0.75rem;">
+        <a href="{% url 'history' %}" class="btn btn-secondary">
+            <i class="fa-solid fa-clock-rotate-left"></i> My History
+        </a>
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary" title="Manage quizzes & questions">
+            <i class="fa-solid fa-sliders"></i> Admin
+        </a>
+    </div>
+</div>
+
+<hr>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+    <h2><i class="fa-solid fa-layer-group" style="color: var(--primary); margin-right: 0.5rem;"></i> Available Quizzes</h2>
+    <span class="badge badge-success">{{ quizzes.count }} Active Topics</span>
+</div>
+
+<!-- Quizzes Grid -->
+<div class="card-grid">
+    {% for quiz in quizzes %}
+        <div class="card">
+            <div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                    <div class="card-icon" style="margin-bottom: 0;">
+                        {% if 'python' in quiz.name|lower %}
+                            <i class="fa-brands fa-python"></i>
+                        {% elif 'java' in quiz.name|lower %}
+                            <i class="fa-brands fa-java"></i>
+                        {% elif 'c++' in quiz.name|lower or 'cpp' in quiz.name|lower %}
+                            <i class="fa-solid fa-code"></i>
+                        {% else %}
+                            <i class="fa-solid fa-brain"></i>
+                        {% endif %}
+                    </div>
+                    <span class="badge badge-primary">
+                        <i class="fa-solid fa-circle-question"></i> {{ quiz.number_of_questions }} Questions
+                    </span>
+                </div>
+
+                <h3 style="font-size: 1.35rem; margin-bottom: 0.5rem;">{{ quiz.name }}</h3>
+                <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                    Test your comprehensive understanding and proficiency in {{ quiz.name }}.
+                </p>
+            </div>
+
+            <div>
+                {% if quiz.question_set.count > 0 %}
+                    <a href="{% url 'start_quiz' quiz.id %}" class="btn btn-primary" style="width: 100%;">
+                        <i class="fa-solid fa-play"></i> Start Quiz
+                    </a>
+                {% else %}
+                    <button class="btn btn-secondary" style="width: 100%; opacity: 0.6; cursor: not-allowed;" disabled title="Questions are being added">
+                        <i class="fa-solid fa-hourglass-half"></i> Coming Soon
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem;">
+            <i class="fa-solid fa-box-open" style="font-size: 3rem; color: var(--text-dim); margin-bottom: 1rem; display: block;"></i>
+            <h3>No Quizzes Available Yet</h3>
+            <p>Check back later or visit the Admin Panel to create your first quiz topic!</p>
+            <a href="{% url 'add_quiz' %}" class="btn btn-primary" style="margin-top: 1rem;">
+                <i class="fa-solid fa-plus"></i> Create Quiz
+            </a>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

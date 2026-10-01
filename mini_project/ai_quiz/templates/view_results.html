@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}All Student Results | QuizCraft AI{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+    <div>
+        <div style="margin-bottom: 0.35rem;">
+            <span class="badge badge-primary">
+                <i class="fa-solid fa-chart-column"></i> Analytics & Submissions
+            </span>
+        </div>
+        <h1>Student Results Archive</h1>
+        <p style="margin: 0; color: var(--text-muted);">Comprehensive log of all student test attempts across all quiz topics.</p>
+    </div>
+
+    <div>
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">
+            <i class="fa-solid fa-arrow-left"></i> Admin Dashboard
+        </a>
+    </div>
+</div>
+
+<hr>
+
+{% if results %}
+    <div class="data-table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Quiz Subject</th>
+                    <th>Score / Total</th>
+                    <th>Performance</th>
+                    <th>Attempt Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.65rem;">
+                                <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--primary-gradient); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: #fff;">
+                                    {{ result.user.username|slice:":1"|upper }}
+                                </div>
+                                <strong style="color: var(--text-primary);">{{ result.user.username }}</strong>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge badge-primary">
+                                {{ result.quiz.name }}
+                            </span>
+                        </td>
+                        <td>
+                            <strong style="font-size: 1.1rem; color: var(--text-primary);">{{ result.score }}</strong>
+                            <span style="color: var(--text-muted);">/ {{ result.total_questions }}</span>
+                        </td>
+                        <td>
+                            {% if result.score == result.total_questions and result.total_questions > 0 %}
+                                <span class="badge badge-success">
+                                    <i class="fa-solid fa-star"></i> Perfect
+                                </span>
+                            {% elif result.score > 0 %}
+                                <span class="badge badge-primary">
+                                    <i class="fa-solid fa-check"></i> Passed
+                                </span>
+                            {% else %}
+                                <span class="badge badge-danger">
+                                    <i class="fa-solid fa-xmark"></i> Incomplete
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td style="color: var(--text-muted); font-size: 0.85rem;">
+                            {{ result.attempted_at|date:"M d, Y &bull; H:i" }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div style="text-align: center; padding: 4rem 1rem;">
+        <i class="fa-solid fa-chart-pie" style="font-size: 3.5rem; color: var(--text-dim); margin-bottom: 1.25rem; display: block;"></i>
+        <h3>No Student Results Recorded Yet</h3>
+        <p style="margin-bottom: 1.5rem;">As soon as students complete any quiz, their scores will be logged here in real-time.</p>
+        <a href="{% url 'home' %}" class="btn btn-primary">
+            <i class="fa-solid fa-play"></i> Take a Test Now
+        </a>
+    </div>
+{% endif %}
+{% endblock %}

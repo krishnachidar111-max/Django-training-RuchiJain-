@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OIST</title>
+    <link rel="stylesheet" href="{% static 'colleges.css' %}">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <h2>Colleges Hub</h2>
+        <div>
+            <a href="{% url 'home' %}"><button>Home</button></a>
+            <a href="{% url 'sistec' %}"><button>SISTEC</button></a>
+            <a href="{% url 'lnct' %}"><button>LNCT</button></a>
+            <a href="{% url 'oist' %}"><button>OIST</button></a>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="page">
+
+        <h1>OIST Bhopal</h1>
+        <p class="sub">Oriental Institute of Science & Technology — Bhopal, MP</p>
+
+        <!-- College Image -->
+        <img src="{% static 'oist.png' %}" alt="OIST Campus">
+
+        <!-- About -->
+        <div class="box">
+            <h2>About OIST</h2>
+            <p>
+                Oriental Institute of Science & Technology (OIST), Bhopal is a top engineering
+                institution under Oriental University. It is known for academic excellence, modern
+                labs, and a vibrant campus. OIST focuses on producing skilled and responsible engineers.
+            </p>
+        </div>
+
+        <!-- Key Information -->
+        <div class="box">
+            <h2>Key Information</h2>
+            <ul>
+                <li><strong>Location:</strong> Raisen Road, Bhopal, MP – 462022</li>
+                <li><strong>Affiliation:</strong> Oriental University / RGPV</li>
+                <li><strong>Approved by:</strong> AICTE, UGC</li>
+                <li><strong>Established:</strong> 2000</li>
+                <li><strong>Courses:</strong> B.E., M.Tech, MBA, MCA, B.Pharma</li>
+            </ul>
+        </div>
+
+        <!-- Popular Courses -->
+        <div class="box">
+            <h2>Popular Courses</h2>
+            <ul>
+                <li>B.E. Computer Science & Engineering</li>
+                <li>B.E. Information Technology</li>
+                <li>B.E. Electronics & Communication</li>
+                <li>B.E. Mechanical Engineering</li>
+                <li>MBA / MCA / B.Pharma</li>
+            </ul>
+        </div>
+
+        <!-- Buttons -->
+        <div class="buttons">
+            <a href="https://oriental.ac.in/oist-bhopal" target="_blank" class="btn-blue">Visit Website</a>
+            <a href="{% url 'home' %}" class="btn-outline">Back to Home</a>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>2026 Colleges Hub | All Rights Reserved</p>
+    </footer>
+
+</body>
+
+</html>

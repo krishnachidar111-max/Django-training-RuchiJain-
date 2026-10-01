@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEC</title>
+    <link rel="stylesheet" href="{% static 'colleges.css' %}">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <h2>Colleges Hub</h2>
+        <div>
+            <a href="{% url 'home' %}"><button>Home</button></a>
+            <a href="{% url 'sistec' %}"><button>SISTEC</button></a>
+            <a href="{% url 'lnct' %}"><button>LNCT</button></a>
+            <a href="{% url 'oist' %}"><button>OIST</button></a>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="page">
+
+        <h1>SISTEC</h1>
+        <p class="sub">Sagar Institute of Science, Technology & Engineering — Bhopal, MP</p>
+
+        <!-- College Image -->
+        <img src="{% static 'sistec.jpeg' %}" alt="SISTEC Campus">
+
+        <!-- About -->
+        <div class="box">
+            <h2>About SISTEC</h2>
+            <p>
+                Sagar Institute of Science, Technology & Engineering (SISTec) is a leading
+                engineering college in Madhya Pradesh, affiliated with RGPV Bhopal. It is known
+                for its modern facilities, experienced faculty, and strong industry connections.
+            </p>
+        </div>
+
+        <!-- Key Information -->
+        <div class="box">
+            <h2>Key Information</h2>
+            <ul>
+                <li><strong>Location:</strong> Ratibad, Bhopal, MP – 462044</li>
+                <li><strong>Affiliation:</strong> RGPV</li>
+                <li><strong>Approved by:</strong> AICTE</li>
+                <li><strong>Established:</strong> 2002</li>
+                <li><strong>Courses:</strong> B.E., M.E., MBA, MCA</li>
+            </ul>
+        </div>
+
+        <!-- Popular Courses -->
+        <div class="box">
+            <h2>Popular Courses</h2>
+            <ul>
+                <li>B.E. Computer Science & Engineering</li>
+                <li>B.E. Information Technology</li>
+                <li>B.E. Electronics & Communication</li>
+                <li>B.E. Mechanical Engineering</li>
+                <li>MBA / MCA</li>
+            </ul>
+        </div>
+
+        <!-- Buttons -->
+        <div class="buttons">
+            <a href="https://www.sistecgn.ac.in/" target="_blank" class="btn-blue">Visit Website</a>
+            <a href="{% url 'home' %}" class="btn-outline">Back to Home</a>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>2026 Colleges Hub | All Rights Reserved</p>
+    </footer>
+
+</body>
+
+</html>

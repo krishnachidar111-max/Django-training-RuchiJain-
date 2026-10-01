@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'mycss.css' %}">   
+</head>
+<body>
+    <h1>{{ name }}</h1>
+    <h2>{{ age }}</h2>
+    {% if age >= 18 %}
+    <h2>you are eligible for voting</h2>
+    {% else %}
+    <h2>you are not eligible for voting</h2>
+    {% endif %} 
+</body>
+</html>

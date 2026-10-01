@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Quiz Topic | QuizCraft AI{% endblock %}
+
+{% block content %}
+<div style="max-width: 560px; margin: 0 auto;">
+    <div style="margin-bottom: 2rem;">
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary btn-sm" style="margin-bottom: 1.25rem;">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+        <div style="margin-bottom: 0.35rem;">
+            <span class="badge badge-primary">
+                <i class="fa-solid fa-folder-plus"></i> Quiz Configuration
+            </span>
+        </div>
+        <h1>Create a New Quiz</h1>
+        <p style="margin: 0; color: var(--text-muted);">Set up a new subject or topic where students can take tests.</p>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="name"><i class="fa-solid fa-heading" style="margin-right: 0.35rem;"></i> Quiz Title / Subject</label>
+            <input type="text" name="name" id="name" required placeholder="e.g., Python Advanced Concepts, World History">
+            <small class="helptext">A distinct and clear title for this test subject.</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="number_of_questions"><i class="fa-solid fa-calculator" style="margin-right: 0.35rem;"></i> Number of Questions to Show per Test</label>
+            <input type="number" name="number_of_questions" id="number_of_questions" min="1" max="100" required placeholder="e.g., 5 or 10">
+            <small class="helptext">How many questions will be presented to the student when taking this quiz.</small>
+        </div>
+        
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+            <button type="submit" class="btn btn-primary btn-lg" style="flex: 1;">
+                <i class="fa-solid fa-check"></i> Create Quiz Topic
+            </button>
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary btn-lg">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

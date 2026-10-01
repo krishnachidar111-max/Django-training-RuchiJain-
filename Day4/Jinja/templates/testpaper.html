@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'mycss.css' %}">
+</head>
+
+<body>
+    <div>
+       <h1> {{que}}</h1>
+    <div class="op"><input type="radio" name="answer">{{a}}</div>
+    <div class="op"><input type="radio" name="answer">{{b}}</div>
+    <div class="op"><input type="radio" name="answer">{{c}}</div>
+    <div class="op"><input type="radio" name="answer">{{d}}</div>
+    <div class="image">
+        <img src="{% static 'anime.jpg' %}" alt="Sistec">
+    </div>
+    <div class="video">
+        <video width="400" controls>
+            <source src="{% static 'bmw video .mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    </div>
+</body>
+
+
+</html>

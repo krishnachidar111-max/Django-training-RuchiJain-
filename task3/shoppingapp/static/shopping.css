@@ -1,0 +1,194 @@
+/* ── Reset ── */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ── Body ── */
+body {
+    background-color: #eef2f6;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    color: #1a2a40;
+    min-height: 100vh;
+    padding: 30px 16px 50px;
+}
+
+/* ── Main Container ── */
+.container {
+    width: 100%;
+    max-width: 820px;
+    margin: 0 auto;
+}
+
+/* ── Page Title ── */
+.page-title {
+    text-align: center;
+    color: #0c1a30;
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 30px;
+    letter-spacing: -0.3px;
+}
+
+/* ── Cards Row ── */
+.cards-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-bottom: 26px;
+}
+
+/* ── Store Card ── */
+.card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 22px 20px 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 220px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.09);
+}
+
+/* ── Card Titles ── */
+.card-title {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.title-amazon {
+    color: #e67a17;
+}
+
+.title-flipkart {
+    color: #0066cc;
+}
+
+.title-meesho {
+    color: #8e24aa;
+}
+
+/* ── Image Box ── */
+.img-box {
+    width: 100%;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.img-box img {
+    max-width: 140px;
+    max-height: 55px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+/* ── Button Links ── */
+.card a {
+    width: 82%;
+    text-decoration: none;
+    display: block;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px 16px;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #ffffff;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.btn:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-amazon {
+    background-color: #e07a1e;
+}
+
+.btn-flipkart {
+    background-color: #0073e6;
+}
+
+.btn-meesho {
+    background-color: #8e24aa;
+}
+
+/* ── Featured Video Box ── */
+.video-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px 22px 22px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.video-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0c1a30;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.video-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.video-wrapper video {
+    width: 100%;
+    max-width: 740px;
+    height: 440px;
+    background: #000000;
+    border-radius: 10px;
+    object-fit: contain;
+    display: block;
+    outline: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 720px) {
+    .cards-row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .card {
+        min-height: 190px;
+    }
+
+    .card a {
+        width: 100%;
+    }
+
+    .video-wrapper video {
+        height: 280px;
+    }
+}

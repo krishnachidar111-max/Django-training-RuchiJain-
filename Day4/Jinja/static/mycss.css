@@ -1,0 +1,111 @@
+/* ===== General Body ===== */
+body {
+    background-color: rgb(230, 240, 255);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 30px 20px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ===== Headings ===== */
+h1 {
+    color: #2c3e50;
+    font-size: 32px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+h2 {
+    color: #1a6e1a;
+    font-size: 22px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* ===== Container / Card ===== */
+div {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin: 10px auto;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.12);
+    box-sizing: border-box;
+}
+
+/* ===== Paragraph text ===== */
+p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* ===== Options (radio buttons in testpaper/voting) ===== */
+.op {
+    color: rgb(10, 126, 10);
+    font-size: 20px;
+    margin: 5px 0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #f0fff0;
+    width: auto;
+    max-width: 100%;
+    box-shadow: none;
+}
+
+/* ===== Input elements ===== */
+input[type="radio"] {
+    margin-right: 8px;
+    accent-color: green;
+}
+
+/* ===== Image Container ===== */
+.image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    background-color: #f9f9f9;
+    border: 2px solid #2c3e50;
+    border-radius: 12px;
+    box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.15);
+    padding: 0;
+}
+
+.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+}
+
+/* ===== Video Container ===== */
+.video {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    background-color: #1a1a2e;
+    border: 2px solid #4a90d9;
+    border-radius: 12px;
+    box-shadow: 0 0 16px rgba(74, 144, 217, 0.4);
+    padding: 0;
+}
+
+.video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+}
+

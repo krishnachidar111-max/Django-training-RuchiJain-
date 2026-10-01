@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Login &bull; Student Placement Prediction System{% endblock %}
+
+{% block content %}
+<div class="content-container narrow">
+    <div class="glass-card">
+        <div class="card-header">
+            <span class="card-badge">🔐 Portal Access</span>
+            <h2 class="card-title">Student Login</h2>
+            <p class="card-subtitle">Sign in to access your placement likelihood dashboard and analytics.</p>
+        </div>
+
+        {% if error %}
+            <div class="alert-box alert-error">
+                <span class="alert-icon">⚠️</span>
+                <span class="alert-content">{{ error }}</span>
+            </div>
+        {% endif %}
+
+        <form action="{% url 'login_validation' %}" method="post" class="app-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="S_Name" class="form-label">
+                    <span>Student Name or ID</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon">👤</span>
+                    <input type="text" id="S_Name" name="S_Name" class="app-input" placeholder="Enter your Name or Student ID" required autofocus>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="S_Pass" class="form-label">
+                    <span>Password</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="S_Pass" name="S_Pass" class="app-input" placeholder="Enter your password" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">
+                <span>Sign In to Portal</span> &rarr;
+            </button>
+        </form>
+
+        <div class="card-footer-links">
+            <p>New student? <a href="{% url 'register' %}">Create an account here</a></p>
+            <p><a href="{% url 'home' %}">&larr; Return to Home</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

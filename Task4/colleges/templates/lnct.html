@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LNCT</title>
+    <link rel="stylesheet" href="{% static 'colleges.css' %}">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <h2>Colleges Hub</h2>
+        <div>
+            <a href="{% url 'home' %}"><button>Home</button></a>
+            <a href="{% url 'sistec' %}"><button>SISTEC</button></a>
+            <a href="{% url 'lnct' %}"><button>LNCT</button></a>
+            <a href="{% url 'oist' %}"><button>OIST</button></a>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="page">
+
+        <h1>LNCT University</h1>
+        <p class="sub">Lakshmi Narain College of Technology — Bhopal, MP</p>
+
+        <!-- College Image -->
+        <img src="{% static 'lnct.png' %}" alt="LNCT Campus">
+
+        <!-- About -->
+        <div class="box">
+            <h2>About LNCT</h2>
+            <p>
+                Lakshmi Narain College of Technology (LNCT) is one of the top engineering universities
+                in Madhya Pradesh. It offers undergraduate, postgraduate, and doctoral programmes with
+                a strong focus on research and industry-ready education.
+            </p>
+        </div>
+
+        <!-- Key Information -->
+        <div class="box">
+            <h2>Key Information</h2>
+            <ul>
+                <li><strong>Location:</strong> Raisen Road, Bhopal, MP – 462022</li>
+                <li><strong>Status:</strong> LNCT University (State Private University)</li>
+                <li><strong>Approved by:</strong> UGC, AICTE</li>
+                <li><strong>Established:</strong> 1994</li>
+                <li><strong>Courses:</strong> B.Tech, M.Tech, MBA, MCA, Law, B.Pharma</li>
+            </ul>
+        </div>
+
+        <!-- Popular Courses -->
+        <div class="box">
+            <h2>Popular Courses</h2>
+            <ul>
+                <li>B.Tech Computer Science & Engineering</li>
+                <li>B.Tech AI & Machine Learning</li>
+                <li>B.Tech Electronics & Communication</li>
+                <li>B.Tech Mechanical Engineering</li>
+                <li>MBA / MCA / BCA</li>
+            </ul>
+        </div>
+
+        <!-- Buttons -->
+        <div class="buttons">
+            <a href="https://lnct.ac.in/" target="_blank" class="btn-blue">Visit Website</a>
+            <a href="{% url 'home' %}" class="btn-outline">Back to Home</a>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>2026 Colleges Hub | All Rights Reserved</p>
+    </footer>
+
+</body>
+
+</html>

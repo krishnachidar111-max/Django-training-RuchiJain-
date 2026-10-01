@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block title %}Prediction Result &bull; PlaceAI{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <div class="glass-card">
+        <div class="card-header">
+            <span class="card-badge">📊 Model Analysis Complete</span>
+            <h2 class="card-title">Placement Prediction Result</h2>
+            {% if student_name %}
+                <p class="card-subtitle">Candidate Evaluation Report for: <strong style="color: var(--primary);">{{ student_name }}</strong></p>
+            {% else %}
+                <p class="card-subtitle">Evaluated based on academic performance, cognitive aptitude, and extracurricular profile score.</p>
+            {% endif %}
+        </div>
+
+        <!-- Result Outcome Card -->
+        {% if ans == 1 %}
+            <div class="result-status-card result-placed">
+                <div class="result-badge badge-placed">
+                    <span>🎉</span> Placed (1)
+                </div>
+                <h3 style="font-family: var(--font-heading); font-size: 22px; color: #065f46; margin-bottom: 8px;">
+                    Congratulations! High Likelihood of Placement
+                </h3>
+                <p class="result-status-text">
+                    The machine learning model predicts that the student is in a strong position to secure a campus placement offer based on the submitted academic and profile metrics.
+                </p>
+            </div>
+        {% else %}
+            <div class="result-status-card result-not-placed">
+                <div class="result-badge badge-not-placed">
+                    <span>⚠️</span> Not Placed (0)
+                </div>
+                <h3 style="font-family: var(--font-heading); font-size: 22px; color: #9f1239; margin-bottom: 8px;">
+                    Improvement Opportunities Identified
+                </h3>
+                <p class="result-status-text">
+                    The model predicts that current metrics fall short of the standard benchmark for selection. Consider enhancing your CGPA, practicing aptitude/IQ problem sets, or adding notable portfolio projects.
+                </p>
+            </div>
+        {% endif %}
+
+        <!-- Visual Metrics Overview Grid -->
+        <div class="result-metrics-grid">
+            <div class="metric-pill-card">
+                <div class="pill-label">Cumulative CGPA</div>
+                <div class="pill-value">{{ list.0 }}</div>
+                <div class="pill-sub">Out of 10.00</div>
+            </div>
+
+            <div class="metric-pill-card">
+                <div class="pill-label">Cognitive IQ</div>
+                <div class="pill-value">{{ list.1 }}</div>
+                <div class="pill-sub">Standard Aptitude Score</div>
+            </div>
+
+            <div class="metric-pill-card">
+                <div class="pill-label">Profile Score</div>
+                <div class="pill-value">{{ list.2 }}</div>
+                <div class="pill-sub">Out of 100</div>
+            </div>
+        </div>
+
+        <!-- Detailed Breakdown Data Table -->
+        <div class="data-table-container">
+            <div class="data-table-header">
+                <span>Detailed Parameters Breakdown</span>
+                <span style="font-size: 12px; color: var(--text-muted); font-weight: 500;">Binary Classifier (Threshold 0.5)</span>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Parameter Metric</th>
+                        <th>Submitted Value</th>
+                        <th>Classification Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>CGPA (Academic Performance)</strong></td>
+                        <td>{{ list.0 }} / 10.0</td>
+                        <td>
+                            {% if list.0 >= 7.0 %}
+                                <span class="table-tag tag-success">&check; Strong</span>
+                            {% else %}
+                                <span class="table-tag tag-danger">&excl; Needs Focus</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>IQ / Aptitude Score</strong></td>
+                        <td>{{ list.1 }}</td>
+                        <td>
+                            {% if list.1 >= 100 %}
+                                <span class="table-tag tag-success">&check; Proficient</span>
+                            {% else %}
+                                <span class="table-tag tag-danger">&excl; Average</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Profile &amp; Project Score</strong></td>
+                        <td>{{ list.2 }} / 100</td>
+                        <td>
+                            {% if list.2 >= 60 %}
+                                <span class="table-tag tag-success">&check; Competitive</span>
+                            {% else %}
+                                <span class="table-tag tag-danger">&excl; Developing</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>ML Model Decision Value</strong></td>
+                        <td><strong>{{ ans }}</strong></td>
+                        <td>
+                            {% if ans == 1 %}
+                                <span class="table-tag tag-success">&check; Placed</span>
+                            {% else %}
+                                <span class="table-tag tag-danger">&times; Not Placed</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="result-actions">
+            <a href="{% url 'predict' %}" class="btn btn-primary btn-lg">
+                <span>🔄</span> Predict Another Student
+            </a>
+            <a href="{% url 'home' %}" class="btn btn-secondary btn-lg">
+                <span>🏠</span> Back to Home
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

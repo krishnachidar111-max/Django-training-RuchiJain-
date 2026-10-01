@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body style="background-color: blue;">
+    <div style="border: darkkhaki;">
+        <h1 style="text-align: center;">
+            this is home page
+        </h1>
+        <div>
+            <h1 style="text-align: center;">
+                {{ request.session.name }}
+            </h1>
+            <a href="{% url 'logout' %}"><button style="text-align: center;">logout</button></a>
+        </div>
+
+    </div>
+    <div style="text-align: center;">
+        <h2>congratulation</h2>
+
+
+    </div>
+
+</body>
+
+</html>

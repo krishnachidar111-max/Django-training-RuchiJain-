@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}Add New Question | QuizCraft AI{% endblock %}
+
+{% block content %}
+<div style="max-width: 680px; margin: 0 auto;">
+    <div style="margin-bottom: 2rem;">
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary btn-sm" style="margin-bottom: 1.25rem;">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+        <div style="margin-bottom: 0.35rem;">
+            <span class="badge badge-primary">
+                <i class="fa-solid fa-circle-question"></i> Question Builder
+            </span>
+        </div>
+        <h1>Add a New Question</h1>
+        <p style="margin: 0; color: var(--text-muted);">Craft a question with four multiple choice options and designate the correct answer.</p>
+    </div>
+
+    {% if not quizzes %}
+        <div class="card" style="text-align: center; padding: 3rem 1.5rem;">
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 3rem; color: var(--warning); margin-bottom: 1rem; display: block;"></i>
+            <h3>No Quizzes Available</h3>
+            <p>You need to create at least one quiz topic before adding questions.</p>
+            <a href="{% url 'add_quiz' %}" class="btn btn-primary" style="margin-top: 1rem;">
+                <i class="fa-solid fa-plus"></i> Create Quiz First
+            </a>
+        </div>
+    {% else %}
+        <form method="POST" id="questionForm">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="quiz"><i class="fa-solid fa-layer-group" style="margin-right: 0.35rem;"></i> Select Quiz Subject</label>
+                <select name="quiz" id="quiz" required>
+                    <option value="" disabled selected>-- Choose a Quiz Topic --</option>
+                    {% for q in quizzes %}
+                        <option value="{{ q.id }}" {% if request.GET.quiz == q.id|stringformat:"i" %}selected{% endif %}>
+                            {{ q.name }} ({{ q.question_set.count }} questions currently)
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="question_text"><i class="fa-solid fa-quote-left" style="margin-right: 0.35rem;"></i> Question Text</label>
+                <textarea name="question_text" id="question_text" rows="3" required placeholder="Type the question prompt here..."></textarea>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-top: 0.5rem;">
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <label for="option1">Option 1</label>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="setCorrectFrom('option1')" style="padding: 0.2rem 0.6rem; font-size: 0.75rem;">Set as Correct</button>
+                    </div>
+                    <input type="text" name="option1" id="option1" required placeholder="Enter option 1">
+                </div>
+                
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <label for="option2">Option 2</label>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="setCorrectFrom('option2')" style="padding: 0.2rem 0.6rem; font-size: 0.75rem;">Set as Correct</button>
+                    </div>
+                    <input type="text" name="option2" id="option2" required placeholder="Enter option 2">
+                </div>
+                
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <label for="option3">Option 3</label>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="setCorrectFrom('option3')" style="padding: 0.2rem 0.6rem; font-size: 0.75rem;">Set as Correct</button>
+                    </div>
+                    <input type="text" name="option3" id="option3" required placeholder="Enter option 3">
+                </div>
+                
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <label for="option4">Option 4</label>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="setCorrectFrom('option4')" style="padding: 0.2rem 0.6rem; font-size: 0.75rem;">Set as Correct</button>
+                    </div>
+                    <input type="text" name="option4" id="option4" required placeholder="Enter option 4">
+                </div>
+            </div>
+            
+            <div class="form-group" style="margin-top: 1rem;">
+                <label for="correct_answer"><i class="fa-solid fa-check-circle" style="color: var(--success); margin-right: 0.35rem;"></i> Correct Answer (Exact text matching chosen option)</label>
+                <input type="text" name="correct_answer" id="correct_answer" required placeholder="Click 'Set as Correct' above or type exact text">
+                <small class="helptext">Students choosing this answer will be credited with 1 point.</small>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
+                <button type="submit" class="btn btn-primary btn-lg" style="flex: 1;">
+                    <i class="fa-solid fa-floppy-disk"></i> Save Question
+                </button>
+                <a href="{% url 'manage_questions' %}" class="btn btn-secondary btn-lg">
+                    Manage Questions
+                </a>
+            </div>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function setCorrectFrom(optionId) {
+    const input = document.getElementById(optionId);
+    const correctInput = document.getElementById('correct_answer');
+    if (input && input.value.trim() !== '') {
+        correctInput.value = input.value.trim();
+        correctInput.style.borderColor = 'var(--success)';
+        setTimeout(() => { correctInput.style.borderColor = ''; }, 1000);
+    } else {
+        alert('Please fill in ' + optionId + ' first before setting it as correct.');
+        input.focus();
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal &bull; Home</title>
+    <link rel="stylesheet" href="{% static 'myuser/css/style.css' %}">
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <a href="{% url 'home' %}" class="nav-brand">
+            <div class="brand-icon">🎓</div>
+            <div>
+                <div class="brand-title">Student Portal</div>
+                <div class="brand-sub">Academic Records System</div>
+            </div>
+        </a>
+        <nav class="nav-links">
+            <a href="{% url 'home' %}" class="nav-link-btn nav-link-ghost">Home</a>
+            {% if portal_user %}
+                <span class="nav-user-chip">
+                    <span class="dot"></span>
+                    {{ portal_user.name }}
+                </span>
+                <a href="{% url 'student_registration' %}" class="nav-link-btn nav-link-primary">Register Students</a>
+                <a href="{% url 'logout' %}" class="nav-link-btn nav-link-logout">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="nav-link-btn nav-link-ghost">Login</a>
+                <a href="{% url 'sign_up' %}" class="nav-link-btn nav-link-primary">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="portal-container narrow">
+        <div class="portal-card">
+            <div class="home-hero">
+                <div class="home-hero-icon">🏫</div>
+                <span class="portal-badge">Academic Management</span>
+                <h1 class="portal-title">Student Registration Portal</h1>
+                <p class="portal-subtitle">
+                    Secure student record management portal. Create an account or sign in to register students and review your submitted records.
+                </p>
+
+                <div class="home-actions">
+                    {% if portal_user %}
+                        <a href="{% url 'student_registration' %}" class="btn-hero btn-hero-primary">
+                            <span>📋</span> Open Student Registration
+                        </a>
+                        <a href="{% url 'logout' %}" class="btn-hero btn-hero-secondary">
+                            <span>🚪</span> Log out
+                        </a>
+                    {% else %}
+                        <a href="{% url 'sign_up' %}" class="btn-hero btn-hero-primary">
+                            <span>📝</span> Create Account
+                        </a>
+                        <a href="{% url 'login' %}" class="btn-hero btn-hero-secondary">
+                            <span>🔐</span> Sign In
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="portal-footer">
+        <p>&copy; 2026 Student Portal &bull; All Rights Reserved</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ quiz.name }} | QuizCraft AI{% endblock %}
+
+{% block content %}
+<div class="quiz-header">
+    <div>
+        <div style="margin-bottom: 0.35rem;">
+            <span class="badge badge-primary">
+                <i class="fa-solid fa-code"></i> Knowledge Assessment
+            </span>
+        </div>
+        <h1 style="margin: 0; font-size: 2rem;">{{ quiz.name }}</h1>
+        <p style="margin: 0; font-size: 0.95rem; color: var(--text-muted);">
+            Answer all questions below. Take your time and choose the best option.
+        </p>
+    </div>
+
+    <div>
+        <span class="badge badge-success" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
+            <i class="fa-solid fa-list-check"></i> {{ questions|length }} Questions
+        </span>
+    </div>
+</div>
+
+{% if questions %}
+    <form method="POST" id="quizForm">
+        {% csrf_token %}
+
+        {% for question in questions %}
+            <div class="question-card" id="q-card-{{ question.id }}">
+                <div class="question-header">
+                    <span class="question-badge">Q{{ forloop.counter }}</span>
+                    <h3 class="question-title">{{ question.question_text }}</h3>
+                </div>
+
+                <div class="options-list">
+                    <label class="quiz-option" onclick="selectOption(this, '{{ question.id }}')">
+                        <input type="radio" name="question_{{ question.id }}" value="{{ question.option1 }}" required>
+                        <span class="option-indicator">A</span>
+                        <span class="option-text">{{ question.option1 }}</span>
+                    </label>
+
+                    <label class="quiz-option" onclick="selectOption(this, '{{ question.id }}')">
+                        <input type="radio" name="question_{{ question.id }}" value="{{ question.option2 }}">
+                        <span class="option-indicator">B</span>
+                        <span class="option-text">{{ question.option2 }}</span>
+                    </label>
+
+                    <label class="quiz-option" onclick="selectOption(this, '{{ question.id }}')">
+                        <input type="radio" name="question_{{ question.id }}" value="{{ question.option3 }}">
+                        <span class="option-indicator">C</span>
+                        <span class="option-text">{{ question.option3 }}</span>
+                    </label>
+
+                    <label class="quiz-option" onclick="selectOption(this, '{{ question.id }}')">
+                        <input type="radio" name="question_{{ question.id }}" value="{{ question.option4 }}">
+                        <span class="option-indicator">D</span>
+                        <span class="option-text">{{ question.option4 }}</span>
+                    </label>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div style="display: flex; gap: 1rem; justify-content: center; align-items: center; margin-top: 2rem; flex-wrap: wrap;">
+            <button type="submit" class="btn btn-primary btn-lg" style="min-width: 200px;">
+                <i class="fa-solid fa-paper-plane"></i> Submit Quiz
+            </button>
+            <a href="{% url 'home' %}" class="btn btn-secondary">
+                <i class="fa-solid fa-xmark"></i> Cancel & Return
+            </a>
+        </div>
+    </form>
+{% else %}
+    <div style="text-align: center; padding: 4rem 1rem;">
+        <i class="fa-solid fa-triangle-exclamation" style="font-size: 3.5rem; color: var(--warning); margin-bottom: 1.25rem; display: block;"></i>
+        <h2>No Questions Found</h2>
+        <p style="max-width: 500px; margin: 0 auto 2rem;">
+            This quiz does not have any questions configured yet. You can add questions from the Admin Panel.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+            <a href="{% url 'home' %}" class="btn btn-secondary">
+                <i class="fa-solid fa-arrow-left"></i> Back to Quizzes
+            </a>
+            <a href="{% url 'add_question' %}" class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i> Add Question Now
+            </a>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function selectOption(labelElement, questionId) {
+    const parentCard = labelElement.closest('.question-card');
+    const allOptions = parentCard.querySelectorAll('.quiz-option');
+    allOptions.forEach(opt => opt.classList.remove('selected'));
+    labelElement.classList.add('selected');
+    const radio = labelElement.querySelector('input[type="radio"]');
+    if (radio) radio.checked = true;
+}
+
+// Auto highlight on page load if radio is pre-checked
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.quiz-option input[type="radio"]:checked').forEach(radio => {
+        radio.closest('.quiz-option').classList.add('selected');
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Home &bull; Student Placement Prediction System{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <div class="glass-card">
+        <!-- Hero Section -->
+        <div class="hero-banner">
+            <div class="hero-pill">
+                <span>✨</span> Machine Learning Powered Analytics
+            </div>
+            <h1 class="hero-title">
+                Predict Your Campus <span>Placement Likelihood</span>
+            </h1>
+            <p class="hero-description">
+                Leverage advanced predictive modeling to assess your placement readiness based on academic performance, cognitive aptitude, and holistic profile score.
+            </p>
+        </div>
+
+        <!-- 3 Feature Pillars -->
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon-box">📊</div>
+                <h3>Academic CGPA</h3>
+                <p>Cumulative grade point average tracking core engineering and academic rigor.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon-box">🧠</div>
+                <h3>Aptitude &amp; IQ</h3>
+                <p>Cognitive reasoning, quantitative abilities, and analytical problem solving.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon-box">⭐</div>
+                <h3>Profile Score</h3>
+                <p>Evaluation of projects, internships, leadership, and extracurricular skills.</p>
+            </div>
+        </div>
+
+        <!-- Call to Action Buttons -->
+        <div class="hero-cta">
+            {% if request.session.student_name %}
+                <a href="{% url 'predict' %}" class="btn btn-primary btn-lg">
+                    <span>🚀</span> Continue to Prediction Engine
+                </a>
+            {% else %}
+                <a href="{% url 'register' %}" class="btn btn-primary btn-lg">
+                    <span>📝</span> Register as Student
+                </a>
+                <a href="{% url 'login' %}" class="btn btn-secondary btn-lg">
+                    <span>🔐</span> Student Login
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

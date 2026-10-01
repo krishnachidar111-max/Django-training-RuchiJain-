@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colleges Hub</title>
+    <link rel="stylesheet" href="{% static 'colleges.css' %}">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <h2>Colleges Hub</h2>
+        <div>
+            <a href="{% url 'home' %}"><button>Home</button></a>
+            <a href="{% url 'sistec' %}"><button>SISTEC</button></a>
+            <a href="{% url 'lnct' %}"><button>LNCT</button></a>
+            <a href="{% url 'oist' %}"><button>OIST</button></a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Top Colleges in Bhopal</h1>
+        <p>Explore SISTEC, LNCT, and OIST — engineering colleges in Madhya Pradesh.</p>
+    </div>
+
+    <!-- College Cards -->
+    <div class="cards">
+
+        <!-- SISTEC -->
+        <div class="card">
+            <img src="{% static 'sistec.jpeg' %}" alt="SISTEC">
+            <h3>SISTEC</h3>
+            <p>Sagar Institute of Science, Technology & Engineering, Bhopal</p>
+            <a href="{% url 'sistec' %}"><button>View Details</button></a>
+        </div>
+
+        <!-- LNCT -->
+        <div class="card">
+            <img src="{% static 'lnct.png' %}" alt="LNCT">
+            <h3>LNCT</h3>
+            <p>Lakshmi Narain College of Technology, Bhopal</p>
+            <a href="{% url 'lnct' %}"><button>View Details</button></a>
+        </div>
+
+        <!-- OIST -->
+        <div class="card">
+            <img src="{% static 'oist.png' %}" alt="OIST">
+            <h3>OIST</h3>
+            <p>Oriental Institute of Science & Technology, Bhopal</p>
+            <a href="{% url 'oist' %}"><button>View Details</button></a>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>2026 Colleges Hub | All Rights Reserved</p>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard | QuizCraft AI{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+    <div>
+        <div style="margin-bottom: 0.35rem;">
+            <span class="badge badge-warning">
+                <i class="fa-solid fa-shield-halved"></i> Management Console
+            </span>
+        </div>
+        <h1>Admin Control Panel</h1>
+        <p style="margin: 0; color: var(--text-muted);">Manage quizzes, question pools, and monitor all student exam performance.</p>
+    </div>
+
+    <div style="display: flex; gap: 0.75rem;">
+        <a href="{% url 'home' %}" class="btn btn-secondary">
+            <i class="fa-solid fa-graduation-cap"></i> Student View
+        </a>
+    </div>
+</div>
+
+<!-- Admin KPI Metrics -->
+<div class="stats-bar">
+    <div class="stat-item">
+        <div class="stat-number">{{ total_quizzes }}</div>
+        <div class="stat-label">Total Quizzes</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number" style="background: var(--secondary-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+            {{ total_questions }}
+        </div>
+        <div class="stat-label">Total Questions</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number" style="color: var(--success); -webkit-text-fill-color: var(--success);">
+            {{ total_results }}
+        </div>
+        <div class="stat-label">Total Submissions</div>
+    </div>
+</div>
+
+<!-- Quick Action Shortcuts -->
+<div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin: 1.5rem 0 2.5rem;">
+    <a href="{% url 'add_quiz' %}" class="card" style="text-decoration: none; text-align: center; align-items: center; padding: 1.5rem;">
+        <div class="card-icon" style="margin: 0 auto 0.75rem auto;">
+            <i class="fa-solid fa-folder-plus"></i>
+        </div>
+        <h3 style="font-size: 1.1rem; margin: 0;">Add New Quiz</h3>
+        <p style="font-size: 0.85rem; margin: 0.35rem 0 0; color: var(--text-muted);">Create a new topic</p>
+    </a>
+
+    <a href="{% url 'add_question' %}" class="card" style="text-decoration: none; text-align: center; align-items: center; padding: 1.5rem;">
+        <div class="card-icon" style="background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.3); color: #34d399; margin: 0 auto 0.75rem auto;">
+            <i class="fa-solid fa-circle-question"></i>
+        </div>
+        <h3 style="font-size: 1.1rem; margin: 0;">Add Question</h3>
+        <p style="font-size: 0.85rem; margin: 0.35rem 0 0; color: var(--text-muted);">Attach to any quiz</p>
+    </a>
+
+    <a href="{% url 'manage_questions' %}" class="card" style="text-decoration: none; text-align: center; align-items: center; padding: 1.5rem;">
+        <div class="card-icon" style="background: rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.3); color: #fbbf24; margin: 0 auto 0.75rem auto;">
+            <i class="fa-solid fa-list-check"></i>
+        </div>
+        <h3 style="font-size: 1.1rem; margin: 0;">Manage Questions</h3>
+        <p style="font-size: 0.85rem; margin: 0.35rem 0 0; color: var(--text-muted);">Edit or delete items</p>
+    </a>
+
+    <a href="{% url 'view_results' %}" class="card" style="text-decoration: none; text-align: center; align-items: center; padding: 1.5rem;">
+        <div class="card-icon" style="background: rgba(6, 182, 212, 0.12); border-color: rgba(6, 182, 212, 0.3); color: #22d3ee; margin: 0 auto 0.75rem auto;">
+            <i class="fa-solid fa-chart-column"></i>
+        </div>
+        <h3 style="font-size: 1.1rem; margin: 0;">Student Results</h3>
+        <p style="font-size: 0.85rem; margin: 0.35rem 0 0; color: var(--text-muted);">View all submissions</p>
+    </a>
+</div>
+
+<hr>
+
+<!-- Quiz Topics Management List -->
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+    <h2><i class="fa-solid fa-database" style="color: var(--primary); margin-right: 0.5rem;"></i> Active Quiz Topics</h2>
+    <a href="{% url 'add_quiz' %}" class="btn btn-primary btn-sm">
+        <i class="fa-solid fa-plus"></i> New Quiz
+    </a>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 1rem;">
+    {% for quiz in quizzes %}
+        <div class="card" style="flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div style="display: flex; align-items: center; gap: 1.25rem;">
+                <div class="card-icon" style="margin-bottom: 0;">
+                    <i class="fa-solid fa-book-bookmark"></i>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 0.25rem;">{{ quiz.name }}</h3>
+                    <p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">
+                        Target per test: <strong>{{ quiz.number_of_questions }}</strong> questions &bull; In pool: <strong>{{ quiz.question_set.count }}</strong> questions
+                    </p>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="{% url 'start_quiz' quiz.id %}" class="btn btn-secondary btn-sm" title="Preview Quiz">
+                    <i class="fa-regular fa-eye"></i> Preview
+                </a>
+                <a href="{% url 'add_question' %}?quiz={{ quiz.id }}" class="btn btn-primary btn-sm" title="Add Question to this Quiz">
+                    <i class="fa-solid fa-plus"></i> Add Q
+                </a>
+                <a href="{% url 'delete_quiz' quiz.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete \'{{ quiz.name }}\' and all its questions?');" title="Delete Quiz">
+                    <i class="fa-solid fa-trash-can"></i> Delete
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        <div style="text-align: center; padding: 3rem 1rem;">
+            <p>No quizzes configured yet. Click above to add your first quiz topic.</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

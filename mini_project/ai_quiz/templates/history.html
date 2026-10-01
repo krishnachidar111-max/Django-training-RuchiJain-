@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}My Test History | QuizCraft AI{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+    <div>
+        <div style="margin-bottom: 0.35rem;">
+            <span class="badge badge-primary">
+                <i class="fa-solid fa-clock-rotate-left"></i> Personal Records
+            </span>
+        </div>
+        <h1>My Test History</h1>
+        <p style="margin: 0; color: var(--text-muted);">Track your past performance and see how much you have improved over time.</p>
+    </div>
+
+    <div>
+        <a href="{% url 'home' %}" class="btn btn-secondary">
+            <i class="fa-solid fa-arrow-left"></i> Back to Quizzes
+        </a>
+    </div>
+</div>
+
+<!-- Stats Bar -->
+{% if results %}
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-number">{{ total_attempts }}</div>
+            <div class="stat-label">Total Attempts</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" style="color: var(--success); -webkit-text-fill-color: var(--success);">{{ best_score }}</div>
+            <div class="stat-label">Highest Score</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" style="background: var(--secondary-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+                {{ user.username }}
+            </div>
+            <div class="stat-label">Student Profile</div>
+        </div>
+    </div>
+{% endif %}
+
+<hr>
+
+<!-- Attempts List -->
+<div style="display: flex; flex-direction: column; gap: 1rem;">
+    {% for result in results %}
+        <div class="card" style="flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.25rem;">
+            <div style="display: flex; align-items: center; gap: 1.25rem;">
+                <div class="card-icon" style="margin-bottom: 0;">
+                    {% if 'python' in result.quiz.name|lower %}
+                        <i class="fa-brands fa-python"></i>
+                    {% elif 'java' in result.quiz.name|lower %}
+                        <i class="fa-brands fa-java"></i>
+                    {% elif 'c++' in result.quiz.name|lower or 'cpp' in result.quiz.name|lower %}
+                        <i class="fa-solid fa-code"></i>
+                    {% else %}
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <h3 style="margin-bottom: 0.25rem;">{{ result.quiz.name }}</h3>
+                    <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">
+                        <i class="fa-regular fa-calendar" style="margin-right: 0.35rem;"></i>
+                        {{ result.attempted_at|date:"F d, Y &bull; H:i" }}
+                    </p>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <div style="text-align: right;">
+                    <div style="font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--text-primary); line-height: 1;">
+                        {{ result.score }} <span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;">/ {{ result.total_questions }}</span>
+                    </div>
+                    <span class="badge {% if result.score == result.total_questions %}badge-success{% elif result.score > 0 %}badge-primary{% else %}badge-danger{% endif %}" style="margin-top: 0.35rem;">
+                        Score Recorded
+                    </span>
+                </div>
+
+                <a href="{% url 'start_quiz' result.quiz.id %}" class="btn btn-secondary btn-sm" title="Retake Quiz">
+                    <i class="fa-solid fa-rotate-right"></i> Retake
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        <div style="text-align: center; padding: 4rem 1rem;">
+            <i class="fa-solid fa-clock-rotate-left" style="font-size: 3.5rem; color: var(--text-dim); margin-bottom: 1.25rem; display: block;"></i>
+            <h3>No Test History Yet</h3>
+            <p style="max-width: 480px; margin: 0 auto 2rem;">
+                You haven't attempted any quizzes so far. Take your first test today to see your achievements here!
+            </p>
+            <a href="{% url 'home' %}" class="btn btn-primary btn-lg">
+                <i class="fa-solid fa-play"></i> Start a Quiz Now
+            </a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

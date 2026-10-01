@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Student Placement Prediction System{% endblock %}</title>
+    <!-- Modern Favicon / Icon SVG -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <a href="{% url 'home' %}" class="nav-brand">
+            <div class="brand-icon">🎓</div>
+            <div class="brand-text">
+                <span class="brand-title">PlaceAI</span>
+                <span class="brand-tag">Placement Forecast</span>
+            </div>
+        </a>
+
+        <nav class="nav-menu">
+            <a href="{% url 'home' %}" class="nav-btn nav-btn-ghost">Home</a>
+            {% if student_name or request.session.student_name %}
+                <span class="nav-user-badge">
+                    <span class="user-dot"></span>
+                    {{ student_name|default:request.session.student_name }}
+                </span>
+                <a href="{% url 'predict' %}" class="nav-btn nav-btn-primary">Predict</a>
+                <a href="{% url 'logout' %}" class="nav-btn nav-btn-logout">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="nav-btn nav-btn-ghost">Login</a>
+                <a href="{% url 'register' %}" class="nav-btn nav-btn-primary">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-wrapper">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <p>&copy; 2026 PlaceAI &bull; Campus Student Placement Prediction Portal</p>
+            <div class="system-status">
+                <span class="status-dot"></span>
+                <span>ML Pipeline &bull; Active</span>
+            </div>
+        </div>
+    </footer>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

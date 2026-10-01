@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration &bull; Portal</title>
+    <link rel="stylesheet" href="{% static 'myuser/css/style.css' %}">
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <a href="{% url 'home' %}" class="nav-brand">
+            <div class="brand-icon">🎓</div>
+            <div>
+                <div class="brand-title">Student Portal</div>
+                <div class="brand-sub">Academic Records System</div>
+            </div>
+        </a>
+        <nav class="nav-links">
+            <a href="{% url 'home' %}" class="nav-link-btn nav-link-ghost">Home</a>
+            {% if portal_user %}
+                <span class="nav-user-chip">
+                    <span class="dot"></span>
+                    {{ portal_user.name }}
+                </span>
+                <a href="{% url 'logout' %}" class="nav-link-btn nav-link-logout">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="nav-link-btn nav-link-ghost">Log in</a>
+                <a href="{% url 'sign_up' %}" class="nav-link-btn nav-link-primary">Sign up</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="portal-container">
+        <div class="portal-card">
+            <div class="portal-header">
+                <span class="portal-badge">Academic Intake</span>
+                <h1 class="portal-title">Student Registration Form</h1>
+                {% if portal_user %}
+                    <p class="portal-subtitle">Logged in as <strong>{{ portal_user.name }}</strong> ({{ portal_user.username }}). Submissions are linked to your account.</p>
+                {% else %}
+                    <p class="portal-subtitle">Enter student academic and subject details below to register.</p>
+                {% endif %}
+            </div>
+
+            {% if errormsg %}
+                <p role="alert">{{ errormsg }}</p>
+            {% endif %}
+
+            {% if saved %}
+                <p role="status">Student registration saved.</p>
+            {% endif %}
+
+            <!-- Registration Form -->
+            <form action="{% url 'student_registration' %}" method="post">
+                {% csrf_token %}
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+                    <p>
+                        <label for="student_id">Student ID</label>
+                        <input type="text" id="student_id" name="student_id" maxlength="20" placeholder="e.g. STU-2026-01" required autofocus>
+                    </p>
+                    <p>
+                        <label for="student_name">Student Name</label>
+                        <input type="text" id="student_name" name="student_name" maxlength="100" placeholder="e.g. Priya Sharma" required>
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+                    <p>
+                        <label for="semester">Semester</label>
+                        <input type="text" id="semester" name="semester" maxlength="30" placeholder="e.g. Semester 5" required>
+                    </p>
+                    <p>
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" maxlength="100" placeholder="e.g. Computer Science &amp; Engg" required>
+                    </p>
+                </div>
+
+                <button type="submit">Submit registration &rarr;</button>
+            </form>
+
+            <!-- Registered Students Section -->
+            <div class="table-section">
+                <div class="table-header">
+                    <h2>Registered students</h2>
+                    {% if students %}
+                        <span style="font-size: 13px; font-weight: 600; color: var(--text-muted);">
+                            Total: <strong>{{ students|length }}</strong> record{{ students|length|pluralize }}
+                        </span>
+                    {% endif %}
+                </div>
+
+                {% if students %}
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Student Name</th>
+                                    <th>Semester</th>
+                                    <th>Subject</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                    <tr>
+                                        <td>
+                                            <span class="student-id-badge">{{ student.student_id }}</span>
+                                        </td>
+                                        <td><strong>{{ student.student_name }}</strong></td>
+                                        <td>{{ student.semester }}</td>
+                                        <td>{{ student.subject }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="empty-state">No students registered yet. Fill out the form above to add your first student record.</p>
+                {% endif %}
+            </div>
+
+            <div class="portal-links">
+                <p><a href="{% url 'home' %}">&larr; Return to Home Page</a></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="portal-footer">
+        <p>&copy; 2026 Student Portal &bull; All Rights Reserved</p>
+    </footer>
+
+</body>
+</html>

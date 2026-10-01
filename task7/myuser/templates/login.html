@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in &bull; Student Portal</title>
+    <link rel="stylesheet" href="{% static 'myuser/css/style.css' %}">
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <a href="{% url 'home' %}" class="nav-brand">
+            <div class="brand-icon">🎓</div>
+            <div>
+                <div class="brand-title">Student Portal</div>
+                <div class="brand-sub">Academic Records System</div>
+            </div>
+        </a>
+        <nav class="nav-links">
+            <a href="{% url 'home' %}" class="nav-link-btn nav-link-ghost">Home</a>
+            <a href="{% url 'sign_up' %}" class="nav-link-btn nav-link-ghost">Sign up</a>
+            <a href="{% url 'login' %}" class="nav-link-btn nav-link-primary">Log in</a>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="portal-container narrow">
+        <div class="portal-card">
+            <div class="portal-header">
+                <span class="portal-badge">Account Access</span>
+                <h1 class="portal-title">Log in</h1>
+                <p class="portal-subtitle">Sign in to submit and view your student registrations.</p>
+            </div>
+
+            {% if errormsg %}
+                <p role="alert">{{ errormsg }}</p>
+            {% endif %}
+
+            <form action="{% url 'login_vel' %}" method="post">
+                {% csrf_token %}
+                <p>
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required autofocus>
+                </p>
+                <p>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </p>
+                <button type="submit">Log in &rarr;</button>
+            </form>
+
+            <div class="portal-links">
+                <p>Need an account? <a href="{% url 'sign_up' %}">Create account here</a></p>
+                <p><a href="{% url 'home' %}">&larr; Return to Home</a></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="portal-footer">
+        <p>&copy; 2026 Student Portal &bull; All Rights Reserved</p>
+    </footer>
+
+</body>
+</html>

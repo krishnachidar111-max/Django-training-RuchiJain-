@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}QuizCraft AI - Modern Testing & Learning Platform{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <div style="margin-bottom: 1.25rem;">
+        <span class="badge badge-primary">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Next-Gen Testing Engine
+        </span>
+    </div>
+
+    <h1 class="hero-title">Master Any Subject with Smart Interactive Quizzes</h1>
+    <p class="subtitle">
+        Assess your skills in Python, Java, C++, and more with real-time feedback, analytics, and instant score evaluation.
+    </p>
+
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem;">
+        <a href="{% url 'signup' %}" class="btn btn-primary btn-lg">
+            <i class="fa-solid fa-rocket"></i> Get Started Free
+        </a>
+        <a href="{% url 'login' %}" class="btn btn-secondary btn-lg">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Login to Dashboard
+        </a>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="card-grid" style="margin-top: 2.5rem; text-align: left;">
+        <div class="card">
+            <div>
+                <div class="card-icon">
+                    <i class="fa-solid fa-bolt-lightning"></i>
+                </div>
+                <h3>Instant Results</h3>
+                <p>Submit your quiz and get an immediate breakdown of your score, accuracy rate, and correct answers.</p>
+            </div>
+            <span class="badge badge-success" style="align-self: flex-start;">
+                <i class="fa-solid fa-check"></i> Real-time Evaluation
+            </span>
+        </div>
+
+        <div class="card">
+            <div>
+                <div class="card-icon" style="background: rgba(6, 182, 212, 0.12); border-color: rgba(6, 182, 212, 0.3); color: #22d3ee;">
+                    <i class="fa-solid fa-cubes"></i>
+                </div>
+                <h3>Curated Topics</h3>
+                <p>Carefully structured questions covering core concepts in modern computer science and engineering.</p>
+            </div>
+            <span class="badge badge-primary" style="align-self: flex-start;">
+                <i class="fa-solid fa-book-open"></i> Multiple Subjects
+            </span>
+        </div>
+
+        <div class="card">
+            <div>
+                <div class="card-icon" style="background: rgba(236, 72, 153, 0.12); border-color: rgba(236, 72, 153, 0.3); color: #f472b6;">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </div>
+                <h3>Performance History</h3>
+                <p>Track your test history, review your progress over time, and aim for a 100% accuracy score.</p>
+            </div>
+            <span class="badge badge-warning" style="align-self: flex-start;">
+                <i class="fa-solid fa-award"></i> Track Growth
+            </span>
+        </div>
+    </div>
+</div>
+{% endblock %}

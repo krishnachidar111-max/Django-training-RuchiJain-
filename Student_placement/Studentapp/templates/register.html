@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Register &bull; Student Placement Prediction System{% endblock %}
+
+{% block content %}
+<div class="content-container narrow">
+    <div class="glass-card">
+        <div class="card-header">
+            <span class="card-badge">✨ Student Onboarding</span>
+            <h2 class="card-title">Create Your Account</h2>
+            <p class="card-subtitle">Register to unlock personalized campus placement analytics and insights.</p>
+        </div>
+
+        {% if error %}
+            <div class="alert-box alert-error">
+                <span class="alert-icon">⚠️</span>
+                <span class="alert-content">{{ error }}</span>
+            </div>
+        {% endif %}
+
+        <form action="{% url 'save_student' %}" method="post" class="app-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="S_Id" class="form-label">
+                    <span>Student ID / Roll No</span>
+                    <span class="label-hint">Required</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🆔</span>
+                    <input type="text" id="S_Id" name="S_Id" class="app-input" placeholder="e.g. STU101" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="S_Name" class="form-label">
+                    <span>Full Name</span>
+                    <span class="label-hint">Required</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon">👤</span>
+                    <input type="text" id="S_Name" name="S_Name" class="app-input" placeholder="e.g. John Doe" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="S_Pass" class="form-label">
+                    <span>Password</span>
+                    <span class="label-hint">Required</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon">🔒</span>
+                    <input type="password" id="S_Pass" name="S_Pass" class="app-input" placeholder="Create a secure password" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="S_Email" class="form-label">
+                    <span>Email Address</span>
+                    <span class="label-hint">Required</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon">✉️</span>
+                    <input type="email" id="S_Email" name="S_Email" class="app-input" placeholder="student@college.edu" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="S_No" class="form-label">
+                    <span>Contact Number</span>
+                    <span class="label-hint">Optional</span>
+                </label>
+                <div class="input-wrapper">
+                    <span class="input-icon">📞</span>
+                    <input type="text" id="S_No" name="S_No" class="app-input" placeholder="e.g. +91 9876543210">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">
+                <span>Complete Registration</span> &rarr;
+            </button>
+        </form>
+
+        <div class="card-footer-links">
+            <p>Already have an account? <a href="{% url 'login' %}">Sign In here</a></p>
+            <p><a href="{% url 'home' %}">&larr; Return to Home</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

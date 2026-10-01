@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Account | QuizCraft AI{% endblock %}
+
+{% block content %}
+<div style="max-width: 480px; margin: 0 auto;">
+    <div class="text-center" style="margin-bottom: 2rem;">
+        <div class="card-icon" style="margin: 0 auto 1rem auto; width: 56px; height: 56px; font-size: 1.5rem; background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.3); color: #34d399;">
+            <i class="fa-solid fa-user-plus"></i>
+        </div>
+        <h1 style="font-size: 2.2rem; margin-bottom: 0.5rem;">Join QuizCraft</h1>
+        <p style="margin: 0; color: var(--text-muted);">Create your free student account to test your skills</p>
+    </div>
+
+    {% if form.errors %}
+        <div class="errorlist">
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST" style="margin-top: 1rem;">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="id_username"><i class="fa-regular fa-user" style="margin-right: 0.35rem;"></i> Choose Username</label>
+            {{ form.username }}
+            {% if form.username.help_text %}
+                <small class="helptext">{{ form.username.help_text }}</small>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_password1"><i class="fa-solid fa-key" style="margin-right: 0.35rem;"></i> Password</label>
+            {{ form.password1 }}
+            {% if form.password1.help_text %}
+                <small class="helptext">{{ form.password1.help_text }}</small>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_password2"><i class="fa-solid fa-check-double" style="margin-right: 0.35rem;"></i> Confirm Password</label>
+            {{ form.password2 }}
+            {% if form.password2.help_text %}
+                <small class="helptext">{{ form.password2.help_text }}</small>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 1rem;">
+            <i class="fa-solid fa-rocket"></i> Create My Account
+        </button>
+    </form>
+
+    <div style="text-align: center; margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle);">
+        <p style="margin: 0; font-size: 0.95rem; color: var(--text-muted);">
+            Already have an account? 
+            <a href="{% url 'login' %}" style="color: var(--primary-light); font-weight: 600; margin-left: 0.35rem;">Sign In here &rarr;</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Hub</title>
+    <link rel="stylesheet" href="{% static 'shopping.css' %}">
+</head>
+<body>
+
+    <!-- Division 1: App Name -->
+    <div class="header-div">
+        <h1>🛒 Shopping Hub</h1>
+        <p>Your one-stop destination for the best online shopping</p>
+    </div>
+
+    <!-- Division 2: Shopping Websites -->
+    <div class="shops-div">
+        <h2>Top Shopping Websites</h2>
+        <div class="shops-grid">
+
+            <div class="shop-card">
+                <a href="https://www.amazon.in" target="_blank">
+                    <img src="{% static 'amazon.jpg' %}" alt="Amazon">
+                    <div class="shop-label">Visit Amazon →</div>
+                </a>
+            </div>
+
+            <div class="shop-card">
+                <a href="https://www.flipkart.com" target="_blank">
+                    <img src="{% static 'flipkart.jpg' %}" alt="Flipkart">
+                    <div class="shop-label">Visit Flipkart →</div>
+                </a>
+            </div>
+
+            <div class="shop-card">
+                <a href="https://www.meesho.com" target="_blank">
+                    <img src="{% static 'meesho.jpg' %}" alt="Meesho">
+                    <div class="shop-label">Visit Meesho →</div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Division 3: Shopping Video -->
+    <div class="video-div">
+        <h2>🎬 Shopping Experience</h2>
+        <video controls>
+            <source src="{% static 'bmw video .mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+</body>
+</html>

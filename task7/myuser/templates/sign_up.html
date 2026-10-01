@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up &bull; Student Portal</title>
+    <link rel="stylesheet" href="{% static 'myuser/css/style.css' %}">
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <a href="{% url 'home' %}" class="nav-brand">
+            <div class="brand-icon">🎓</div>
+            <div>
+                <div class="brand-title">Student Portal</div>
+                <div class="brand-sub">Academic Records System</div>
+            </div>
+        </a>
+        <nav class="nav-links">
+            <a href="{% url 'home' %}" class="nav-link-btn nav-link-ghost">Home</a>
+            <a href="{% url 'login' %}" class="nav-link-btn nav-link-ghost">Log in</a>
+            <a href="{% url 'sign_up' %}" class="nav-link-btn nav-link-primary">Sign up</a>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <main class="portal-container narrow">
+        <div class="portal-card">
+            <div class="portal-header">
+                <span class="portal-badge">Account Registration</span>
+                <h1 class="portal-title">Create an account</h1>
+                <p class="portal-subtitle">Register to manage and view student academic submissions.</p>
+            </div>
+
+            {% if errormsg %}
+                <p role="alert">{{ errormsg }}</p>
+            {% endif %}
+
+            <form action="{% url 'save_user' %}" method="post">
+                {% csrf_token %}
+                <p>
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" maxlength="20" placeholder="Choose a unique username" required autofocus>
+                </p>
+                <p>
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" maxlength="50" placeholder="Enter your full name" required>
+                </p>
+                <p>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Create a secure password" required>
+                </p>
+                <button type="submit">Sign up &rarr;</button>
+            </form>
+
+            <div class="portal-links">
+                <p>Already registered? <a href="{% url 'login' %}">Log in here</a></p>
+                <p><a href="{% url 'home' %}">&larr; Return to Home</a></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="portal-footer">
+        <p>&copy; 2026 Student Portal &bull; All Rights Reserved</p>
+    </footer>
+
+</body>
+</html>

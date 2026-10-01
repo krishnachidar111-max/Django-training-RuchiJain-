@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Quiz Results - {{ quiz.name }} | QuizCraft AI{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <div style="margin-bottom: 0.5rem;">
+        <span class="badge badge-success">
+            <i class="fa-solid fa-circle-check"></i> Assessment Completed
+        </span>
+    </div>
+
+    <h1>Performance Evaluation</h1>
+    <h2 style="color: var(--primary-light); font-size: 1.5rem; margin-bottom: 2rem;">{{ quiz.name }}</h2>
+
+    <!-- Result Showcase Card -->
+    <div class="result-card">
+        <div class="score-circle">
+            <div class="score-value">{{ score }}</div>
+            <div class="score-total">out of {{ total }}</div>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+            {% if total > 0 and score == total %}
+                <span class="badge badge-success" style="font-size: 0.95rem; padding: 0.45rem 1rem;">
+                    🏆 Perfect Score &bull; 100% Accuracy
+                </span>
+                <p style="margin-top: 0.75rem; color: var(--text-secondary);">
+                    Outstanding! You demonstrated complete mastery of this subject.
+                </p>
+            {% elif percentage >= 70 %}
+                <span class="badge badge-primary" style="font-size: 0.95rem; padding: 0.45rem 1rem;">
+                    🌟 Great Performance &bull; {{ percentage }}% Accuracy
+                </span>
+                <p style="margin-top: 0.75rem; color: var(--text-secondary);">
+                    Well done! You have a solid command of these core concepts.
+                </p>
+            {% elif percentage >= 50 %}
+                <span class="badge badge-warning" style="font-size: 0.95rem; padding: 0.45rem 1rem;">
+                    📚 Passing Grade &bull; {{ percentage }}% Accuracy
+                </span>
+                <p style="margin-top: 0.75rem; color: var(--text-secondary);">
+                    Good effort! Review the tricky questions and try again to improve.
+                </p>
+            {% else %}
+                <span class="badge badge-danger" style="font-size: 0.95rem; padding: 0.45rem 1rem;">
+                    💡 Needs Practice &bull; {{ percentage }}% Accuracy
+                </span>
+                <p style="margin-top: 0.75rem; color: var(--text-secondary);">
+                    Don't worry! Review the materials and retake the test to boost your score.
+                </p>
+            {% endif %}
+        </div>
+
+        <!-- Quick Stats Breakdown -->
+        <div class="stats-bar" style="margin-bottom: 0;">
+            <div class="stat-item">
+                <div class="stat-number" style="color: var(--success); -webkit-text-fill-color: var(--success);">{{ score }}</div>
+                <div class="stat-label">Correct Answers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{{ total }}</div>
+                <div class="stat-label">Total Questions</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" style="background: var(--secondary-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">{{ percentage }}%</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="{% url 'start_quiz' quiz.id %}" class="btn btn-secondary">
+            <i class="fa-solid fa-rotate-right"></i> Retake This Quiz
+        </a>
+        <a href="{% url 'home' %}" class="btn btn-primary">
+            <i class="fa-solid fa-shapes"></i> Browse More Quizzes
+        </a>
+        <a href="{% url 'history' %}" class="btn btn-secondary">
+            <i class="fa-solid fa-chart-line"></i> View Test History
+        </a>
+    </div>
+</div>
+{% endblock %}

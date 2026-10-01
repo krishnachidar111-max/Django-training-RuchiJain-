@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Placement Prediction Engine &bull; PlaceAI{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <div class="glass-card">
+        <div class="card-header">
+            <span class="card-badge">🎯 Predictive Model</span>
+            <h2 class="card-title">Placement Evaluation Engine</h2>
+            {% if student_name %}
+                <p class="card-subtitle">Evaluating profile metrics for candidate: <strong style="color: var(--primary);">{{ student_name }}</strong></p>
+            {% else %}
+                <p class="card-subtitle">Enter your academic, cognitive, and extracurricular metrics below to compute placement chances.</p>
+            {% endif %}
+        </div>
+
+        <form action="{% url 'result' %}" method="get" class="app-form">
+            <!-- 3 Metric Input Cards Grid -->
+            <div class="predict-grid">
+                <!-- CGPA Card -->
+                <div class="metric-input-card">
+                    <div class="metric-card-head">
+                        <div class="metric-badge-icon badge-cgpa">📊</div>
+                        <div>
+                            <div class="metric-card-title">Cumulative CGPA</div>
+                            <div class="metric-card-hint">Scale: 0.00 &ndash; 10.00</div>
+                        </div>
+                    </div>
+                    <input 
+                        type="number" 
+                        step="0.01" 
+                        min="0" 
+                        max="10" 
+                        id="cgpa" 
+                        name="cgpa" 
+                        class="metric-number-input" 
+                        placeholder="7.50" 
+                        required 
+                        autofocus
+                    >
+                </div>
+
+                <!-- IQ Card -->
+                <div class="metric-input-card">
+                    <div class="metric-card-head">
+                        <div class="metric-badge-icon badge-iq">🧠</div>
+                        <div>
+                            <div class="metric-card-title">IQ / Aptitude Score</div>
+                            <div class="metric-card-hint">Cognitive index (50 &ndash; 150)</div>
+                        </div>
+                    </div>
+                    <input 
+                        type="number" 
+                        step="1" 
+                        min="40" 
+                        max="180" 
+                        id="iq" 
+                        name="iq" 
+                        class="metric-number-input" 
+                        placeholder="105" 
+                        required
+                    >
+                </div>
+
+                <!-- Profile Score Card -->
+                <div class="metric-input-card">
+                    <div class="metric-card-head">
+                        <div class="metric-badge-icon badge-profile">⭐</div>
+                        <div>
+                            <div class="metric-card-title">Profile Score</div>
+                            <div class="metric-card-hint">Projects &amp; Skills (0 &ndash; 100)</div>
+                        </div>
+                    </div>
+                    <input 
+                        type="number" 
+                        step="1" 
+                        min="0" 
+                        max="100" 
+                        id="profile_score" 
+                        name="profile_score" 
+                        class="metric-number-input" 
+                        placeholder="75" 
+                        required
+                    >
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg">
+                <span>Run Placement Analysis</span> 🚀
+            </button>
+        </form>
+
+        <div class="card-footer-links">
+            <p>Need to switch user? <a href="{% url 'logout' %}">Log out here</a> or <a href="{% url 'home' %}">Return to Home</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

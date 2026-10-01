@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classification Dossier — Specimen Type {{ ans }} | VitroLab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        /* Embedded / Fallback Styles for 100% Visual Fidelity */
+        :root {
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+            --bg-page: #f8fafc;
+            --bg-page-gradient: radial-gradient(at 10% 10%, rgba(224, 242, 254, 0.7) 0px, transparent 50%),
+                                radial-gradient(at 90% 10%, rgba(254, 243, 199, 0.5) 0px, transparent 45%),
+                                radial-gradient(at 50% 90%, rgba(241, 245, 249, 1) 0px, transparent 60%);
+            --bg-card: #ffffff;
+            --bg-card-subtle: #f8fafc;
+            --border-card: rgba(15, 23, 42, 0.08);
+            --border-card-hover: rgba(15, 23, 42, 0.15);
+            --text-main: #0f172a;
+            --text-body: #334155;
+            --text-muted: #64748b;
+            --text-faint: #94a3b8;
+            --accent-primary: #0f172a;
+            --accent-primary-hover: #1e293b;
+            --accent-primary-text: #ffffff;
+            --accent-cyan: #0284c7;
+            --accent-emerald: #10b981;
+            --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+            --shadow-card: 0 4px 6px -1px rgba(15, 23, 42, 0.04), 0 20px 35px -10px rgba(15, 23, 42, 0.07);
+            --shadow-button: 0 4px 14px rgba(15, 23, 42, 0.15);
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --radius-full: 9999px;
+            --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg-page: #080c14;
+            --bg-page-gradient: radial-gradient(at 15% 15%, rgba(14, 165, 233, 0.15) 0px, transparent 55%),
+                                radial-gradient(at 85% 20%, rgba(124, 58, 237, 0.12) 0px, transparent 50%),
+                                radial-gradient(at 50% 85%, rgba(13, 148, 136, 0.1) 0px, transparent 60%);
+            --bg-card: #0f172a;
+            --bg-card-subtle: #141e33;
+            --border-card: rgba(255, 255, 255, 0.08);
+            --border-card-hover: rgba(255, 255, 255, 0.16);
+            --text-main: #f8fafc;
+            --text-body: #cbd5e1;
+            --text-muted: #94a3b8;
+            --text-faint: #64748b;
+            --accent-primary: #38bdf8;
+            --accent-primary-hover: #0284c7;
+            --accent-primary-text: #0f172a;
+            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.3);
+            --shadow-card: 0 20px 45px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.06);
+            --shadow-button: 0 4px 20px rgba(56, 189, 248, 0.3);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-page);
+            background-image: var(--bg-page-gradient);
+            background-attachment: fixed;
+            color: var(--text-body);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 16px 48px;
+            transition: background-color var(--transition-normal), color var(--transition-normal);
+        }
+        .app-container {
+            width: 100%;
+            max-width: 820px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+
+        <!-- Human Touch Navbar -->
+        <nav class="navbar">
+            <a href="/" class="brand">
+                <div class="brand-icon">💎</div>
+                <div class="brand-text">
+                    <span class="brand-name">VitroLab <span class="brand-tag">v2.4 Pro</span></span>
+                    <span class="brand-sub">Forensic Materials Science & Informatics</span>
+                </div>
+            </a>
+            <div class="nav-actions">
+                <button type="button" class="theme-toggle" id="themeBtn" aria-label="Toggle visual theme">
+                    <span class="theme-icon" id="themeIcon">🌓</span>
+                    <span id="themeLabel">Theme</span>
+                </button>
+            </div>
+        </nav>
+
+        <div class="result-wrapper">
+
+            <!-- Laboratory Dossier Bar -->
+            <div class="certificate-bar">
+                <div class="cert-info">
+                    <div class="cert-seal">✓</div>
+                    <div>
+                        <div class="cert-title">Certified Material Classification Report</div>
+                        <div class="cert-meta">Dossier #GLS-{% now "ymd" %}-{{ ans }}09 • Kernel: Support Vector Machine</div>
+                    </div>
+                </div>
+                <span class="cert-status">Verified Match</span>
+            </div>
+
+            <!-- Hero Result Card -->
+            <div class="result-hero-card">
+                <div class="result-glass-icon">{{ info.icon|default:"🪟" }}</div>
+                <span class="result-type-tag">Specimen Classification Result</span>
+                <h1 class="result-heading">Type {{ ans }}: {{ info.title|default:"Glass Specimen" }}</h1>
+                <div class="result-classification-pill">
+                    <span>🏷️ {{ info.category|default:"Standard Industrial Glass" }}</span>
+                </div>
+                <p class="result-narrative">
+                    {{ info.summary|default:"Based on normalized multi-dimensional oxide ratios and refractive index, the sample matches the calibrated profile of Type "|add:ans|add:" glass with high classification confidence." }}
+                </p>
+
+                {% if info.uses %}
+                <div class="result-properties-row">
+                    <span class="prop-pill"><strong>Formula:</strong> {{ info.silica_profile }}</span>
+                    <span class="prop-pill"><strong>Primary Use:</strong> {{ info.uses }}</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Measured Chemical Profile Card -->
+            <div class="composition-profile-card">
+                <div class="card-headline">
+                    <span class="headline-text">
+                        <span>🧪 Specimen Elemental Breakdown</span>
+                    </span>
+                    <span class="range-chip">Total Oxides: {{ total_oxides|default:"100.0" }}% wt</span>
+                </div>
+
+                <div class="chips-grid-3">
+
+                    <!-- RI -->
+                    <div class="specimen-chip">
+                        <div class="chip-top">
+                            <span class="chip-name">Refractive Index</span>
+                            <span class="element-badge ri-badge" style="width:24px;height:24px;font-size:0.7rem;">RI</span>
+                        </div>
+                        <div class="chip-val">{{ list.0 }}<span class="chip-unit">n</span></div>
+                        <span class="chip-role">Dispersion Constant</span>
+                    </div>
+
+                    <!-- Na -->
+                    <div class="specimen-chip">
+                        <div class="chip-top">
+                            <span class="chip-name">Sodium Oxide</span>
+                            <span class="element-badge el-na" style="width:24px;height:24px;font-size:0.7rem;">Na</span>
+                        </div>
+                        <div class="chip-val">{{ list.1 }}<span class="chip-unit">%</span></div>
+                        <span class="chip-role">Fluxing Agent</span>
+                    </div>
+
+                    <!-- Mg -->
+                    <div class="specimen-chip">
+                        <div class="chip-top">
+                            <span class="chip-name">Magnesium Oxide</span>
+                            <span class="element-badge el-mg" style="width:24px;height:24px;font-size:0.7rem;">Mg</span>
+                        </div>
+                        <div class="chip-val">{{ list.2 }}<span class="chip-unit">%</span></div>
+                        <span class="chip-role">Chemical Stabilizer</span>
+                    </div>
+
+                    <!-- Al -->
+                    <div class="specimen-chip">
+                        <div class="chip-top">
+                            <span class="chip-name">Aluminum Oxide</span>
+                            <span class="element-badge el-al" style="width:24px;height:24px;font-size:0.7rem;">Al</span>
+                        </div>
+                        <div class="chip-val">{{ list.3 }}<span class="chip-unit">%</span></div>
+                        <span class="chip-role">Viscosity & Hardness</span>
+                    </div>
+
+                    <!-- Si -->
+                    <div class="specimen-chip">
+                        <div class="chip-top">
+                            <span class="chip-name">Silicon Dioxide</span>
+                            <span class="element-badge el-si" style="width:24px;height:24px;font-size:0.7rem;">Si</span>
+                        </div>
+                        <div class="chip-val">{{ list.4 }}<span class="chip-unit">%</span></div>
+                        <span class="chip-role">Network Former</span>
+                    </div>
+
+                    <!-- K -->
+                    <div class="specimen-chip">
+                        <div class="chip-top">
+                            <span class="chip-name">Potassium Oxide</span>
+                            <span class="element-badge el-k" style="width:24px;height:24px;font-size:0.7rem;">K</span>
+                        </div>
+                        <div class="chip-val">{{ list.5 }}<span class="chip-unit">%</span></div>
+                        <span class="chip-role">Flux Modifier</span>
+                    </div>
+
+                    <!-- Ca -->
+                    <div class="specimen-chip">
+                        <div class="chip-top">
+                            <span class="chip-name">Calcium Oxide</span>
+                            <span class="element-badge el-ca" style="width:24px;height:24px;font-size:0.7rem;">Ca</span>
+                        </div>
+                        <div class="chip-val">{{ list.6 }}<span class="chip-unit">%</span></div>
+                        <span class="chip-role">Network Stabilizer</span>
+                    </div>
+
+                    <!-- Ba -->
+                    <div class="specimen-chip">
+                        <div class="chip-top">
+                            <span class="chip-name">Barium Oxide</span>
+                            <span class="element-badge el-ba" style="width:24px;height:24px;font-size:0.7rem;">Ba</span>
+                        </div>
+                        <div class="chip-val">{{ list.7 }}<span class="chip-unit">%</span></div>
+                        <span class="chip-role">Heavy Modifier</span>
+                    </div>
+
+                    <!-- Fe -->
+                    <div class="specimen-chip">
+                        <div class="chip-top">
+                            <span class="chip-name">Iron Oxide</span>
+                            <span class="element-badge el-fe" style="width:24px;height:24px;font-size:0.7rem;">Fe</span>
+                        </div>
+                        <div class="chip-val">{{ list.8 }}<span class="chip-unit">%</span></div>
+                        <span class="chip-role">Tint & UV Filter</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Full Taxonomy Reference Guide -->
+            <div class="taxonomy-card">
+                <div class="card-headline">
+                    <span class="headline-text">
+                        <span>📚 UCI Glass Classification Reference</span>
+                    </span>
+                    <span class="range-chip">7 Calibrated Classes</span>
+                </div>
+
+                <ul class="taxonomy-list">
+                    <li class="taxonomy-item {% if ans == 1 %}active-type{% endif %}">
+                        <div class="type-left">
+                            <div class="type-num-badge">1</div>
+                            <div class="type-details">
+                                <span class="type-name">Building Windows — Float Processed</span>
+                                <span class="type-category">Architectural high-uniformity vision glass</span>
+                            </div>
+                        </div>
+                        {% if ans == 1 %}<span class="active-match-tag">● Matched Specimen</span>{% endif %}
+                    </li>
+
+                    <li class="taxonomy-item {% if ans == 2 %}active-type{% endif %}">
+                        <div class="type-left">
+                            <div class="type-num-badge">2</div>
+                            <div class="type-details">
+                                <span class="type-name">Building Windows — Non-Float Processed</span>
+                                <span class="type-category">Drawn / rolled architectural sheet glass</span>
+                            </div>
+                        </div>
+                        {% if ans == 2 %}<span class="active-match-tag">● Matched Specimen</span>{% endif %}
+                    </li>
+
+                    <li class="taxonomy-item {% if ans == 3 %}active-type{% endif %}">
+                        <div class="type-left">
+                            <div class="type-num-badge">3</div>
+                            <div class="type-details">
+                                <span class="type-name">Vehicle Windows — Float Processed</span>
+                                <span class="type-category">Tempered / laminated automotive safety glass</span>
+                            </div>
+                        </div>
+                        {% if ans == 3 %}<span class="active-match-tag">● Matched Specimen</span>{% endif %}
+                    </li>
+
+                    <li class="taxonomy-item {% if ans == 4 %}active-type{% endif %}">
+                        <div class="type-left">
+                            <div class="type-num-badge">4</div>
+                            <div class="type-details">
+                                <span class="type-name">Vehicle Windows — Non-Float Processed</span>
+                                <span class="type-category">Specialty vehicle and heavy machinery glass</span>
+                            </div>
+                        </div>
+                        {% if ans == 4 %}<span class="active-match-tag">● Matched Specimen</span>{% endif %}
+                    </li>
+
+                    <li class="taxonomy-item {% if ans == 5 %}active-type{% endif %}">
+                        <div class="type-left">
+                            <div class="type-num-badge">5</div>
+                            <div class="type-details">
+                                <span class="type-name">Containers & Packaging Ware</span>
+                                <span class="type-category">Pharmaceutical vials, bottles, food jars</span>
+                            </div>
+                        </div>
+                        {% if ans == 5 %}<span class="active-match-tag">● Matched Specimen</span>{% endif %}
+                    </li>
+
+                    <li class="taxonomy-item {% if ans == 6 %}active-type{% endif %}">
+                        <div class="type-left">
+                            <div class="type-num-badge">6</div>
+                            <div class="type-details">
+                                <span class="type-name">Tableware & Household Glass</span>
+                                <span class="type-category">High-clarity stemware, tumblers, cookware</span>
+                            </div>
+                        </div>
+                        {% if ans == 6 %}<span class="active-match-tag">● Matched Specimen</span>{% endif %}
+                    </li>
+
+                    <li class="taxonomy-item {% if ans == 7 %}active-type{% endif %}">
+                        <div class="type-left">
+                            <div class="type-num-badge">7</div>
+                            <div class="type-details">
+                                <span class="type-name">Headlamps & Technical Optics</span>
+                                <span class="type-category">High-heat automotive headlamps & projectors</span>
+                            </div>
+                        </div>
+                        {% if ans == 7 %}<span class="active-match-tag">● Matched Specimen</span>{% endif %}
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Action Toolbar -->
+            <div class="result-toolbar">
+                <a href="/" class="btn-back">
+                    <span>← Analyze Another Specimen</span>
+                </a>
+                <button type="button" class="btn-copy" id="copyBtn">
+                    <span>📋 Copy Dossier</span>
+                </button>
+                <button type="button" class="btn-print" onclick="window.print()">
+                    <span>🖨️ Print Lab Report</span>
+                </button>
+            </div>
+
+        </div>
+
+        <div class="footer-meta">
+            <span>VitroLab Materials Suite</span>
+            <span>•</span>
+            <span>Django 6.1 Architecture</span>
+            <span>•</span>
+            <span>Report Generated Live</span>
+        </div>
+
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-msg" id="toast">
+        <span>✓ Specimen summary copied to clipboard!</span>
+    </div>
+
+    <script>
+        // Theme synchronization
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeLabel = document.getElementById('themeLabel');
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('vitro_theme', theme);
+            if (theme === 'dark') {
+                themeIcon.textContent = '☀️';
+                themeLabel.textContent = 'Light Mode';
+            } else {
+                themeIcon.textContent = '🌙';
+                themeLabel.textContent = 'Dark Mode';
+            }
+        }
+
+        const savedTheme = localStorage.getItem('vitro_theme') || 
+            (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        setTheme(savedTheme);
+
+        themeBtn.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme') || 'light';
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        });
+
+        // Copy Dossier to Clipboard
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            const summary = `VITRO-LAB FORENSIC SPECIMEN REPORT
+Classification: Type {{ ans }} - {{ info.title|default:"Glass Type "|add:ans }}
+Category: {{ info.category|default:"Standard Glass" }}
+Refractive Index: {{ list.0 }}
+Oxides (wt%):
+Na2O: {{ list.1 }}% | MgO: {{ list.2 }}% | Al2O3: {{ list.3 }}%
+SiO2: {{ list.4 }}% | K2O: {{ list.5 }}% | CaO: {{ list.6 }}%
+BaO: {{ list.7 }}%  | Fe2O3: {{ list.8 }}%
+Total Oxides: {{ total_oxides|default:"100.0" }}%`;
+
+            navigator.clipboard.writeText(summary).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2600);
+            });
+        });
+    </script>
+</body>
+</html>

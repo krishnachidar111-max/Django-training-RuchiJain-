@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Hub</title>
+    <link rel="stylesheet" href="{% static 'shopping.css' %}">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Main Page Header -->
+        <h1 class="page-title">Shopping Hub</h1>
+
+        <!-- 3 Marketplace Cards Row -->
+        <div class="cards-row">
+            <!-- Amazon Card -->
+            <div class="card">
+                <h2 class="card-title title-amazon">Amazon</h2>
+                <div class="img-box">
+                    <img src="{% static 'Amazon.png' %}" alt="Amazon">
+                </div>
+                <a href="https://www.amazon.in/" target="_blank" rel="noopener noreferrer">
+                    <button type="button" class="btn btn-amazon">Visit Amazon</button>
+                </a>
+            </div>
+
+            <!-- Flipkart Card -->
+            <div class="card">
+                <h2 class="card-title title-flipkart">Flipkart</h2>
+                <div class="img-box">
+                    <img src="{% static 'flipkart.png' %}" alt="Flipkart">
+                </div>
+                <a href="https://www.flipkart.com/" target="_blank" rel="noopener noreferrer">
+                    <button type="button" class="btn btn-flipkart">Visit Flipkart</button>
+                </a>
+            </div>
+
+            <!-- Meesho Card -->
+            <div class="card">
+                <h2 class="card-title title-meesho">Meesho</h2>
+                <div class="img-box">
+                    <img src="{% static 'meesho.png' %}" alt="Meesho">
+                </div>
+                <a href="https://www.meesho.com/" target="_blank" rel="noopener noreferrer">
+                    <button type="button" class="btn btn-meesho">Visit Meesho</button>
+                </a>
+            </div>
+        </div>
+
+        <!-- Featured Video Box -->
+        <div class="video-card">
+            <h2 class="video-title">Featured Video</h2>
+            <div class="video-wrapper">
+                <video controls preload="metadata">
+                    <source src="{% static 'video.mp4' %}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
